@@ -8,18 +8,6 @@ const title = 'Psoems';
 const description = 'The place for Christ-first poems to uplift your life';
 const seoDescription = 'The place for Christ-first poems to uplift your life';
 
-// Shorts Playlist ID
-// PLXiOleX9bZWysAEwrc9y8XV5cvSr2OIt3
-// Normal Videos ID
-// PLXiOleX9bZWwJDtIH7fB12dhJQTkHwJx3
-// Channel ID
-// UCmUI3Ndj5D9yGSCtsK_Lhuw
-
-// Get Channel Information
-// https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=UCmUI3Ndj5D9yGSCtsK_Lhuw&key=AIzaSyCTx65ZhJeZOMx1Fg7GyL2GWqQTX7N9k6E
-// Get Playlist IDs
-// https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLXiOleX9bZWysAEwrc9y8XV5cvSr2OIt3&key=AIzaSyCTx65ZhJeZOMx1Fg7GyL2GWqQTX7N9k6E
-
 const getVideosIDs = async (type) => {
     let typePlaylistID;
     if (type === 'shorts') {
@@ -29,7 +17,7 @@ const getVideosIDs = async (type) => {
     } else {
         return;
     }
-    const fetchPlaylistDetails = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${typePlaylistID}&key=AIzaSyCTx65ZhJeZOMx1Fg7GyL2GWqQTX7N9k6E`);
+    const fetchPlaylistDetails = await fetch(`${import.meta.env.YoutubeURL}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
     const data = await fetchPlaylistDetails.json();
     return data.items.map((value) => value.snippet).map((value) => value.resourceId.videoId);
 };
@@ -134,7 +122,7 @@ const standardVideosList = await getVideosIDs('standard');
                         <div class="contact-form-wrapper p-8 rounded-xl h-full">
                             <div class="flex justify-center">
                                 <form class="grid grid-cols-12 gap-3" id="contactForm" method="POST">
-                                    <input type="hidden" name="accessKey" value="3c719df6-6343-4feb-8a5c-3863a617756d" />
+                                    <input type="hidden" name="accessKey" value="9e4ce246-4d92-470d-9255-e687d515d4b7" />
                                     <div class="col-span-12">
                                         <div class="form-group">
                                             <label for="name">Your Name</label>
