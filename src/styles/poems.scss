@@ -1,0 +1,37 @@
+pre {
+    white-space: pre-wrap;
+}
+
+.videos lite-youtube {
+    @apply mx-auto;
+}
+
+.pagination {
+    align-items: center;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .current-page {
+    opacity: 0.5;
+}
+
+.pagination .dots {
+    width: fit-content;
+    height: fit-content;
+}
+
+.pagination a {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-underline-offset: 0.125rem;
+}
+
+.pagination img {
+    width: 20px;
+    height: 20px;
+}

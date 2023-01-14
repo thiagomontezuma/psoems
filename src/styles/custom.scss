@@ -1,0 +1,118 @@
+.blog-tags a {
+    @apply font-bold underline text-hot-pink;
+
+    &:hover {
+        @apply text-black;
+    }
+}
+
+.button-standard {
+    background-color: var(--bg-color-opposite);
+    border: 2px solid var(--bg-color-opposite);
+    border-radius: var(--border-radius-button);
+    color: var(--text-color-opposite);
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.625rem 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a {
+    transition: opacity 0.3s ease;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+#searchBox {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.searchResultPage {
+    padding: 15px 0;
+}
+
+.searchResultTitle {
+    color: #fd2d78 !important;
+}
+
+.contact-info-container {
+    background: var(--contact-linear-gradient);
+    box-shadow: var(--contact-box-shadow);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.contact-info-container li {
+    background: var(--contact-linear-gradient);
+    box-shadow: var(--contact-box-shadow);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.contact-form-wrapper {
+    background: var(--contact-linear-gradient);
+    box-shadow: var(--contact-box-shadow);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.contact-form-wrapper input {
+    background-color: var(--bg-input-color);
+    border: 2px solid var(--border-input-color);
+    color: var(--color-body-white);
+    box-shadow: none;
+    width: 100%;
+    border-radius: 6px;
+    height: 55px;
+    padding: 0 15px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.contact-form-wrapper label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    text-align: left;
+    display: block;
+}
+
+.contact-form-wrapper .form-group {
+    margin-bottom: 10px;
+}
+
+.contact-form-wrapper textarea {
+    background-color: var(--bg-input-color);
+    border: 2px solid var(--border-input-color);
+    color: var(--color-body-white);
+    box-shadow: none;
+    min-height: 235px;
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 100%;
+    line-height: 18px;
+    border-radius: 6px;
+}
+
+.contact-form-wrapper button {
+    background: var(--contact-linear-gradient);
+    box-shadow: var(--contact-box-shadow);
+    border-radius: 6px;
+    position: relative;
+    z-index: 2;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0 none;
+    display: inline-block;
+    padding: 15px 35px;
+    list-style: none;
+    text-decoration: none;
+    width: 100%;
+}

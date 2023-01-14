@@ -1,0 +1,116 @@
+---
+import { YouTube } from 'astro-embed';
+const { title, author, description, pubDate, updDate, heroImage, heroVideo, heroAlt, shorts } = Astro.props;
+---
+<h1 id="title" class="text-3xl font-bold text-center mb-4 px-4">{title}</h1>
+<div class="grid grid-cols-12 px-6 max-w-screen-lg mx-auto">
+    <article class="col-span-12">
+        {heroImage && <img src={heroImage} class="w-full mb-8" alt={heroAlt} width="1280" height="720" loading="lazy" />}
+        {heroVideo && shorts ? <div class="shorts-videos videos mb-8"><YouTube class="mb-3" id={heroVideo} /></div> : <div class="videos mb-8"><YouTube class="mb-3" id={heroVideo} /></div>}
+        <div class="w-fit mx-auto">
+            <slot />
+            <!-- <div class="border border-solid p-3 my-6"> -->
+            <div class="flex gap-2 mb-4 mt-6">
+                <img class="change-color-icon" src="/images/about-icon.svg" alt="About Icon" width="24" height="24" loading="lazy">
+                <span class="">by {author}</span>
+            </div>
+            <!-- {pubDate && <p class="mb-1">Published on <span>{pubDate}</span></p>} -->
+            <!-- {updDate && <p class="mb-3">Updated on <span>{updDate}</span></p>} -->
+            <!-- <p id="description" class="mb-2">{description}</p> -->
+            <p class="mb-2">Share this Poem:</p>
+            <div class="flex gap-3 items-center mb-1">
+                <button onclick="shareBlogPostData()" class="" style="background-color:transparent;border:none">
+                    <img class="change-color-icon" src="/images/link-icon-dark.png" alt="Share Post with Short Link" width="24" height="24" loading="lazy">
+                </button>
+                <a id="wppLink" class="" href={`https://wa.me/?text=This%20post%20is%20amazing,%20worth%20to%20check%20it%20out:%20${Astro.url.href}`} target="_blank" data-action="share/whatsapp/share">
+                    <img class="change-color-icon" src="/images/whatsapp-icon.svg" alt="Share Post on Whatsapp" width="24" height="24" loading="lazy">
+                </a>
+                <a class="" href={`http://twitter.com/share?text=Check%20out%20this%20Post:%20&url=${Astro.url.href}`}>
+                    <img class="change-color-icon" src="/images/twitter-icon.svg" alt="Share Post on Twitter" width="24" height="24" loading="lazy">
+                </a>
+                <a class="" href={`http://www.facebook.com/share.php?u=${Astro.url.href}`}>
+                    <img class="change-color-icon" src="/images/facebook-icon.svg" alt="Share Post on Facebook" width="24" height="24" loading="lazy">
+                </a>
+            </div>
+            <!-- </div> -->
+        </div>
+    </article>
+    <!-- <aside class="poem-sidebar col-span-12 lg:col-span-3 xl:col-span-2 order-1 lg:order-2 mb-4 lg:mb-0 p-3" style="background-color:#dadada;color:black">
+        <h2 class="poem-sidebar-title text-xl font-bold mb-1">Post Outline</h2>
+        <hr class="poem-sidebar-hr mb-2">
+        {
+            sidebarLinks.map(item => 
+                item.map((value, index) => {
+                    switch (index) {
+                    case 0:
+                        return <a class="poem-h2-tag mb-1" style="display:block" href={`#${value}`}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</a>
+                    case 1:
+                        return <a class="poem-h3-tag mb-1" style="display:block" href={`#${value}`}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</a>
+                    case 2:
+                        return <a class="poem-h4-tag mb-1" style="display:block" href={`#${value}`}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</a>
+                    case 3:
+                        return <a class="poem-h5-tag mb-1" style="display:block" href={`#${value}`}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</a>
+                    case 4:
+                        return <a class="poem-h6-tag mb-1" style="display:block" href={`#${value}`}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</a>
+                    default:
+                        break;
+                    }
+                })
+            )
+        }
+    </aside> -->
+</div>
+<style>
+.shorts-videos {
+    max-width: 300px;
+    margin: 0 auto;
+}
+</style>
+<script is:inline>
+async function shareBlogPostData() {
+    const shareData = {
+        title: document.getElementById('title').innerText,
+        description: document.getElementById('description').innerText,
+        url: window.location.href
+    }
+    try {
+        await navigator.share(shareData);
+        // resultPara.textContent = 'Post shared successfully'
+    } catch (err) {
+        // copyURLToClipboard();
+        copyTextToClipboard(window.location.href);
+        alert('Page URL has being copied to clipboard');
+        console.error('Error: ' + err);
+        // resultPara.textContent = `Error: ${err}`
+    }
+}
+function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        var successful = document.execCommand('copy');
+        // var msg = successful ? 'successful' : 'unsuccessful';
+        // console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+    document.body.removeChild(textArea);
+}
+function copyTextToClipboard(text) {
+    if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+        // console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
+}
+</script>
