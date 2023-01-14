@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PoemCard from '../../components/PoemCard.astro';
+import PoemPagination from '../../components/PoemPagination.astro';
+const title = 'Poems by Psoems';
+const description = 'List of poems created from the heart of a Christ-believing guy walking in this life';
+const url = 'https://www.psoems.com/poems/';
+const robots = 'index, follow';
+
+// Data Fetching: List all Markdown posts in the repo.
+const pageSize = 12;
+const allRawPosts = Array.from(await Astro.glob('./*.mdx')).sort((a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf());
+const allPosts = allRawPosts.slice(0, pageSize);
+const tags = [...new Set(allRawPosts.map((post) => post.frontmatter.tags).flat())];
+---
+<Layout title={title} description={description} url={url} robots={robots}>
+    <div class="mt-3 max-w-screen-xl mx-auto">
+        <h1 class="text-4xl text-center font-bold mb-8">Poems</h1>
+        <!-- <BlogTagsPageLink requestPageUrlPath={Astro.url.pathname.split('/')[1]} tags={tags}></BlogTagsPageLink> -->
+        <div class="grid grid-cols-12 mb-6 gap-y-12">
+            {allPosts.map(posts => 
+                // 3xl:col-span-3
+                <article class="col-span-12 md:col-span-6 xl:col-span-4 px-4" data-post-id={posts.frontmatter.id} data-title={posts.frontmatter.title} data-subtitle={posts.frontmatter.subtitle} data-description={posts.frontmatter.description} data-tags={posts.frontmatter.tags.map(item => item)}>
+                    <PoemCard post={posts} url={Astro.url.href} />
+                </article>
+            )}
+        </div>
+        <PoemPagination currentPage={1} lastPage={Math.ceil(allRawPosts.length / (pageSize))} requestPageUrlPath={Astro.url.pathname.split('/')[1]} />
+    </div>
+</Layout>

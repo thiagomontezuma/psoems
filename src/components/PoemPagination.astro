@@ -1,0 +1,30 @@
+---
+const { currentPage, lastPage, requestPageUrlPath } = Astro.props;
+---
+<ul class="pagination">
+    {currentPage === 1 ? <img src="/images/arrow-left.svg" class="change-color-icon current-page" alt="Previous Page Icon" width="20" height="20" loading="lazy" /> : <a href={`/${requestPageUrlPath}/${currentPage - 1}`}><img src="/images/arrow-left.svg" class="change-color-icon" alt="Previous Page Icon" width="20" height="20" loading="lazy" /></a>}
+    {Array.from({length: lastPage}).map((_, index, array) => {
+        let indexPage = index + 1;
+        return (
+            lastPage >= 8 && (indexPage > currentPage + 2 && indexPage < lastPage) || (indexPage < currentPage - 2 && indexPage > 1) ? '' : indexPage === currentPage ? <li class="current-page">{indexPage}</li> : <li id={`page${indexPage}`} data-pagenumber={indexPage}><a href={`/${requestPageUrlPath}/${indexPage}`} style="display:inline-block;width:1.25rem;height:1.25rem">{indexPage}</a></li>
+        )
+    })}
+    {currentPage === lastPage ? <img src="/images/arrow-right.svg" class="change-color-icon current-page" alt="Next Page Icon" width="20" height="20" loading="lazy" /> : <a href={`/${requestPageUrlPath}/${currentPage + 1}`}><img src="/images/arrow-right.svg" class="change-color-icon" alt="Next Page Icon" width="20" height="20" loading="lazy" /></a>}
+</ul>
+<script is:inline>
+    const pageURLSplit = window.location.pathname.split('/');
+    const pageNumber = pageURLSplit[pageURLSplit.length - 1] === '' || pageURLSplit[pageURLSplit.length - 1] === 'posts' || pageURLSplit[pageURLSplit.length - 1] === 'lessons' ? 1 : pageURLSplit[pageURLSplit.length - 1];
+    const lastPageNumber = parseInt(document.getElementsByClassName("pagination")[0].children[document.getElementsByClassName("pagination")[0].children.length - 2].dataset.pagenumber);
+    if (pageNumber > 4) {
+        const dots1 = document.createElement('li');
+        dots1.textContent = '...';
+        dots1.classList.add('dots');
+        document.getElementById("page1").parentNode.insertBefore(dots1, document.getElementById("page1").nextSibling)
+    }
+    if (pageNumber < lastPageNumber - 3) {
+        const dots2 = document.createElement('li');
+        dots2.textContent = '...';
+        dots2.classList.add('dots');
+        document.getElementById(`page${lastPageNumber}`).parentNode.insertBefore(dots2, document.getElementById(`page${lastPageNumber}`))
+    }
+</script>

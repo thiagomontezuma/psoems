@@ -1,52 +1,15 @@
 ---
-import BaseHead from '../components/Head/BaseHead.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer/Footer.astro';
+import Layout from '../layouts/Layout.astro';
 
-let title = 'Psoems — 404 Not Found';
-let description = 'Page was not found in our directory';
+const title = 'Psoems — 404 Not Found';
+const description = 'Page was not found in our directory';
+const robots = 'noindex, nofollow';
 ---
-
-<html lang="en">
-    <head>
-        <BaseHead title={title} description={description} />
-    </head>
-
-    <body class="font-body leading-normal personality-casual">
-        <Nav />
-
-        <main class="py-12 lg:py-20">
-            <article class="max-w-6xl mx-auto px-3">
-                <header class="mx-auto max-w-3xl text-center">
-                    <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
-                    <p>This page does not exist in our directories, please go to back to our <a href="/" class="underline underline-offset-4">homepage</a></p>
-                </header>
-            </article>
-        </main>
-
-        <Footer />
-        <script is:inline src="/js/changeStyleMode.js"></script>
-        <!-- <script>
-        window.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem('mode') === 'dark') {
-                document.body.classList.remove("light");
-                document.body.classList.add("dark");
-            } else if (localStorage.getItem('mode') === 'light') {
-                document.body.classList.remove("dark");
-                document.body.classList.add("light");
-            }
-            document.getElementById("changeStyleModeButton").addEventListener("click", function() {
-                if (document.body.classList.contains('dark') || getComputedStyle(document.body).getPropertyValue('--mode-image').includes('light')) {
-                    document.body.classList.remove("dark");
-                    document.body.classList.add("light");
-                    localStorage.setItem('mode', 'light');
-                } else {
-                    document.body.classList.remove("light");
-                    document.body.classList.add("dark");
-                    localStorage.setItem('mode', 'dark');
-                }
-            })
-        }) 
-    </script> -->
-    </body>
-</html>
+<Layout title={title} description={description} url={Astro.url} robots={robots}>
+    <article class="py-12 lg:py-20 max-w-screen-xl mx-auto px-3">
+        <header class="mx-auto max-w-screen-md text-center">
+            <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
+            <p>This page does not exist in our directories, please go to back to our <a href="/" class="underline underline-offset-4">homepage</a></p>
+        </header>
+    </article>
+</Layout>

@@ -1,12 +1,10 @@
 ---
-import BaseHead from '../components/Head/BaseHead.astro';
-import Nav from '../components/Nav.astro';
 import YoutubeCard from '../components/YoutubeCard.astro';
-import Footer from '../components/Footer/Footer.astro';
+import Layout from '../layouts/Layout.astro';
 
 const title = 'Psoems';
 const description = 'The place for Christ-first poems to uplift your life';
-const seoDescription = 'The place for Christ-first poems to uplift your life';
+const robots = 'index, follow';
 
 const getVideosIDs = async (type) => {
     let typePlaylistID;
@@ -25,144 +23,131 @@ const getVideosIDs = async (type) => {
 const shortsVideosList = await getVideosIDs('shorts');
 const standardVideosList = await getVideosIDs('standard');
 ---
-
-<html lang="en">
-    <head>
-        <BaseHead title={title} description={seoDescription} />
-    </head>
-
-    <body class="font-body leading-normal personality-casual">
-        <Nav />
-
-        <main class="py-4 lg:py-6">
-            <article id="videos" class="max-w-6xl mx-auto px-3 mb-10">
-                <!-- <HomeHeader title={title} description={description} /> -->
-                <section class="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-8 items-center">
-                    {
-                        shortsVideosList.map((value) => (
-                            <div class="shorts-videos videos">
-                                <YoutubeCard videoID={value} />
-                            </div>
-                        ))
-                    }
-                    <div class="col-span-2">
-                        <h1 class="font-bold text-3xl mb-3">The Christ-first Poems</h1>
-                        <p class="mb-3">Psoems is a project made with the intention of making poems about life through the eyes of a Christian. In the biggest moments in life or in the small and unimportant moments in life, God is with us, guiding, helping, and protecting.</p>
-                        <p>Based on that, all Psoems' works of art are meant to express the human feelings towards our Lord and towards many other topics such as relationships, friendships, family, many more in life.</p>
-                    </div>
-                </section>
-                <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {
-                        standardVideosList.map((value) => (
-                            <div class="videos">
-                                <YoutubeCard videoID={value} />
-                            </div>
-                        ))
-                    }
-                </section>
-                <section class="flex justify-center text-xl pt-8 font-bold">
-                    <a href="https://www.youtube.com/channel/UCmUI3Ndj5D9yGSCtsK_Lhuw" rel="noopener">See More Videos &rarr;</a>
-                </section>
-            </article>
-            <article id="contact" class="max-w-6xl mx-auto px-3 py-4">
-                <div class="text-center">
-                    <h2 class="font-bold text-3xl mb-8">Contact</h2>
+<Layout title={title} description={description} url={Astro.url} robots={robots}>
+    <main class="py-4 lg:py-6">
+        <article id="videos" class="max-w-screen-xl mx-auto px-3 mb-10">
+            <section class="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-8 items-center">
+                {
+                    shortsVideosList.map((value) => (
+                        <div class="shorts-videos videos">
+                            <YoutubeCard videoID={value} />
+                        </div>
+                    ))
+                }
+                <div class="col-span-2">
+                    <h1 class="font-bold text-3xl mb-3">The Christ-first Poems</h1>
+                    <p class="mb-3">Psoems is a project made with the intention of making poems about life through the eyes of a Christian. In the biggest moments in life or in the small and unimportant moments in life, God is with us, guiding, helping, and protecting.</p>
+                    <p>Based on that, all Psoems' works of art are meant to express the human feelings towards our Lord and towards many other topics such as relationships, friendships, family, many more in life.</p>
                 </div>
-                <div class="grid grid-cols-12 gap-6">
-                    <div class="col-span-12 sm:col-span-5">
-                        <div class="h-full contact-info-container">
-                            <div class="mb-4 overflow-hidden rounded-xl">
-                                <img src="/images/psoems-banner-460w-288h.png" class="w-full h-auto" width="460" height="288" alt="contact-img" />
+            </section>
+            <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {
+                    standardVideosList.map((value) => (
+                        <div class="videos">
+                            <YoutubeCard videoID={value} />
+                        </div>
+                    ))
+                }
+            </section>
+            <section class="flex justify-center text-xl pt-8 font-bold">
+                <a href="https://www.youtube.com/channel/UCmUI3Ndj5D9yGSCtsK_Lhuw" rel="noopener">See More Videos &rarr;</a>
+            </section>
+        </article>
+        <article id="contact" class="max-w-screen-xl mx-auto px-3 py-4">
+            <div class="text-center">
+                <h2 class="font-bold text-3xl mb-8">Contact</h2>
+            </div>
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 sm:col-span-6 lg:col-span-6">
+                    <div class="h-full contact-info-container">
+                        <div class="mb-4 overflow-hidden rounded-xl" style="background-color:#121212">
+                            <img src="/images/psoems-banner-460w-288h.png" class="w-full max-w-sm mx-auto h-auto" width="460" height="288" alt="contact-img" />
+                        </div>
+                        <div class="mb-2 sm:mb-3 md:mb-4">
+                            <span class="font-semibold text-lg opacity-90" style="var(--text-color)">The Christ-first Poems</span>
+                        </div>
+                        <div class="mb-6 md:mb-8">
+                            <p class="font-normal" style="var(--text-color)">
+                                I wish all these works of art touches you and all others that watches the videos. If you liked them, pleaser consider to share the videos with the people you know, it will be a great way to show them the Lord. Also, if you could, please like the videos and subscribe to the YouTube channel to help make this passion grow and reach more people. Thank you for your attention and care in reading all this. May God bless your day and your life!
+                            </p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">CONTACT ME AT</p>
+                            <div class="mt-6">
+                                <ul class="flex gap-4 p-0 list-none">
+                                    <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
+                                        <a href="https://www.youtube.com/channel/UCmUI3Ndj5D9yGSCtsK_Lhuw" target="_blank" class="w-full flex items-center hover:opacity-80">
+                                            <svg fill="#ff014f" xmlns="http://www.w3.org/2000/svg" style="width:32px" viewBox="0 0 50 50" width="50px" height="50px">
+                                                <path
+                                                    d="M 24.402344 9 C 17.800781 9 11.601563 9.5 8.300781 10.199219 C 6.101563 10.699219 4.199219 12.199219 3.800781 14.5 C 3.402344 16.898438 3 20.5 3 25 C 3 29.5 3.398438 33 3.898438 35.5 C 4.300781 37.699219 6.199219 39.300781 8.398438 39.800781 C 11.902344 40.5 17.898438 41 24.5 41 C 31.101563 41 37.097656 40.5 40.597656 39.800781 C 42.800781 39.300781 44.699219 37.800781 45.097656 35.5 C 45.5 33 46 29.402344 46.097656 24.902344 C 46.097656 20.402344 45.597656 16.800781 45.097656 14.300781 C 44.699219 12.101563 42.800781 10.5 40.597656 10 C 37.097656 9.5 31 9 24.402344 9 Z M 24.402344 11 C 31.601563 11 37.398438 11.597656 40.199219 12.097656 C 41.699219 12.5 42.898438 13.5 43.097656 14.800781 C 43.699219 18 44.097656 21.402344 44.097656 24.902344 C 44 29.199219 43.5 32.699219 43.097656 35.199219 C 42.800781 37.097656 40.800781 37.699219 40.199219 37.902344 C 36.597656 38.601563 30.597656 39.097656 24.597656 39.097656 C 18.597656 39.097656 12.5 38.699219 9 37.902344 C 7.5 37.5 6.300781 36.5 6.101563 35.199219 C 5.300781 32.398438 5 28.699219 5 25 C 5 20.398438 5.402344 17 5.800781 14.902344 C 6.101563 13 8.199219 12.398438 8.699219 12.199219 C 12 11.5 18.101563 11 24.402344 11 Z M 19 17 L 19 33 L 33 25 Z M 21 20.402344 L 29 25 L 21 29.597656 Z"
+                                                ></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
+                                        <a href="https://www.instagram.com/psoems/" target="_blank" class="w-full flex items-center hover:opacity-80">
+                                            <svg stroke="#ff014f" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="width:22px" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
+                                        <a href="mailto:info@psoems.com" target="_blank" class="w-full flex items-center hover:opacity-80">
+                                            <svg fill="#ff014f" xmlns="http://www.w3.org/2000/svg" style="width:24px" viewBox="0 0 24 24" width="24px" height="24px">
+                                                <path
+                                                    d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z"
+                                                ></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="mb-4">
-                                <span class="opacity-90" style="var(--text-color)">The Christ-first Poems</span>
-                            </div>
-                            <div class="mb-10">
-                                <p class="font-normal" style="var(--text-color)">
-                                    I wish all these works of art touches you and all others that watches the videos. If you liked them, pleaser consider to share the videos with the people you know, it will be a great way to show them the Lord. Also, if you could, please like the videos and subscribe to the YouTube channel to help make this passion grow and reach more people. Thank you for your attention and care in reading all this. May God bless your day and your life!
-                                </p>
-                            </div>
-                            <div>
-                                <p class="font-semibold">CONTACT ME AT</p>
-                                <div class="mt-6">
-                                    <ul class="flex gap-4 p-0 list-none">
-                                        <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
-                                            <a href="https://www.youtube.com/channel/UCmUI3Ndj5D9yGSCtsK_Lhuw" target="_blank" class="w-full flex items-center hover:opacity-80">
-                                                <svg fill="#ff014f" xmlns="http://www.w3.org/2000/svg" style="width:32px" viewBox="0 0 50 50" width="50px" height="50px">
-                                                    <path
-                                                        d="M 24.402344 9 C 17.800781 9 11.601563 9.5 8.300781 10.199219 C 6.101563 10.699219 4.199219 12.199219 3.800781 14.5 C 3.402344 16.898438 3 20.5 3 25 C 3 29.5 3.398438 33 3.898438 35.5 C 4.300781 37.699219 6.199219 39.300781 8.398438 39.800781 C 11.902344 40.5 17.898438 41 24.5 41 C 31.101563 41 37.097656 40.5 40.597656 39.800781 C 42.800781 39.300781 44.699219 37.800781 45.097656 35.5 C 45.5 33 46 29.402344 46.097656 24.902344 C 46.097656 20.402344 45.597656 16.800781 45.097656 14.300781 C 44.699219 12.101563 42.800781 10.5 40.597656 10 C 37.097656 9.5 31 9 24.402344 9 Z M 24.402344 11 C 31.601563 11 37.398438 11.597656 40.199219 12.097656 C 41.699219 12.5 42.898438 13.5 43.097656 14.800781 C 43.699219 18 44.097656 21.402344 44.097656 24.902344 C 44 29.199219 43.5 32.699219 43.097656 35.199219 C 42.800781 37.097656 40.800781 37.699219 40.199219 37.902344 C 36.597656 38.601563 30.597656 39.097656 24.597656 39.097656 C 18.597656 39.097656 12.5 38.699219 9 37.902344 C 7.5 37.5 6.300781 36.5 6.101563 35.199219 C 5.300781 32.398438 5 28.699219 5 25 C 5 20.398438 5.402344 17 5.800781 14.902344 C 6.101563 13 8.199219 12.398438 8.699219 12.199219 C 12 11.5 18.101563 11 24.402344 11 Z M 19 17 L 19 33 L 33 25 Z M 21 20.402344 L 29 25 L 21 29.597656 Z"
-                                                    ></path>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                        <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
-                                            <a href="https://www.instagram.com/psoems/" target="_blank" class="w-full flex items-center hover:opacity-80">
-                                                <svg stroke="#ff014f" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="width:22px" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
-                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                        <li class="py-2 px-4 sm:py-0 sm:px-3 md:py-2 md:px-4 flex">
-                                            <a href="mailto:info@psoems.com" target="_blank" class="w-full flex items-center hover:opacity-80">
-                                                <svg fill="#ff014f" xmlns="http://www.w3.org/2000/svg" style="width:24px" viewBox="0 0 24 24" width="24px" height="24px">
-                                                    <path
-                                                        d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z"
-                                                    ></path>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                    </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-6 lg:col-span-6">
+                    <div class="contact-form-wrapper p-8 rounded-xl h-full">
+                        <div class="flex justify-center">
+                            <form class="w-full max-w-md mx-auto grid grid-cols-12 gap-3" id="contactForm" method="POST">
+                                <input type="hidden" name="accessKey" value="9e4ce246-4d92-470d-9255-e687d515d4b7" />
+                                <div class="col-span-12">
+                                    <div class="form-group">
+                                        <label for="name">Your Name</label>
+                                        <input id="contactName" class="form-control form-control-lg" style="" name="name" type="text" required="" />
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-7">
-                        <div class="contact-form-wrapper p-8 rounded-xl h-full">
-                            <div class="flex justify-center">
-                                <form class="grid grid-cols-12 gap-3" id="contactForm" method="POST">
-                                    <input type="hidden" name="accessKey" value="9e4ce246-4d92-470d-9255-e687d515d4b7" />
-                                    <div class="col-span-12">
-                                        <div class="form-group">
-                                            <label for="name">Your Name</label>
-                                            <input id="contactName" class="form-control form-control-lg" style="" name="name" type="text" required="" />
-                                        </div>
+                                <div class="col-span-12">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input id="contactEmail" class="form-control form-control-sm" name="email" type="email" required="" />
                                     </div>
-                                    <div class="col-span-12">
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input id="contactEmail" class="form-control form-control-sm" name="email" type="email" required="" />
-                                        </div>
+                                </div>
+                                <div class="col-span-12">
+                                    <div class="form-group">
+                                        <label for="subject">Subject</label>
+                                        <input id="contactSubject" class="form-control form-control-sm" name="subject" type="text" />
                                     </div>
-                                    <div class="col-span-12">
-                                        <div class="form-group">
-                                            <label for="subject">Subject</label>
-                                            <input id="contactSubject" class="form-control form-control-sm" name="subject" type="text" />
-                                        </div>
+                                </div>
+                                <div class="col-span-12">
+                                    <div class="form-group">
+                                        <label for="message">Your Message</label>
+                                        <textarea id="contactMessage" name="message" cols="30" rows="10"></textarea>
                                     </div>
-                                    <div class="col-span-12">
-                                        <div class="form-group">
-                                            <label for="message">Your Message</label>
-                                            <textarea id="contactMessage" name="message" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                    <input id="contactHoneypot" type="text" name="honeypot" style="display:none" />
-                                    <div class="col-span-12">
-                                        <button name="submit" type="submit" id="submit" class="flex justify-center items-center gap-3">
-                                            <span>SEND MESSAGE</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <input id="contactHoneypot" type="text" name="honeypot" style="display:none" />
+                                <div class="col-span-12">
+                                    <button name="submit" type="submit" id="submit" class="flex justify-center items-center gap-3">
+                                        <span>SEND MESSAGE</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </article>
-        </main>
-
-        <Footer />
-        <script is:inline src="/js/changeStyleMode.js"></script>
-    </body>
-</html>
+            </div>
+        </article>
+    </main>
+</Layout>

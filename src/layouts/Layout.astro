@@ -1,0 +1,18 @@
+---
+import Head from '../components/Head.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+const {title, description, url, robots} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Head title={title} description={description} url={url} robots={robots}></Head>
+    </head>
+    <body class="light font-body leading-normal personality-casual">
+        <Nav></Nav>
+        <slot />
+        <Footer></Footer>
+        <script is:inline src="/js/changeStyleMode.js"></script>
+    </body>
+</html>
