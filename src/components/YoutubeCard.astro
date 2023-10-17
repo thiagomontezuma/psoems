@@ -5,4 +5,4 @@ const { videoID } = Astro.props;
 let videoURL = `https://youtu.be/${videoID}`;
 ---
 
-<YouTube id={videoURL} />
+<YouTube id={videoURL} params={'rel=0'} />

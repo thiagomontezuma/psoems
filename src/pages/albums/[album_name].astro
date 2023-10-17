@@ -1,0 +1,35 @@
+---
+import Song from '../../components/Song.astro';
+import Layout from '../../layouts/Layout.astro';
+import { client } from '../../../lib/sanity';
+
+export async function getStaticPaths() {
+    const fetchCMS = await client.fetch('*[_type == "albums"]');
+
+    return await fetchCMS.map((album_data) => {
+        return {
+            params: {
+                album_name: album_data.title_slug
+            },
+            props: { album_data },
+        };
+    });
+}
+
+const { album_name } = Astro.params;
+const { album_data } = Astro.props;
+
+const pageInfo = {
+    title: `${album_data.title} Song by Psoems`,
+    description: "The place for Christ-first songs & poems to uplift your life",
+    robots: "index, follow",
+    canonical: `/albums/${album_name}`,
+    imageURL: "/images/psoems-logo-120x120.png",
+    url: Astro.url,
+    isManuallyDark: true
+}
+// title={title} description={description} url={Astro.url} robots={robots}
+---
+<Layout pageInfo={pageInfo}>
+    <Song song={album_data} />
+</Layout>

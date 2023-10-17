@@ -2,48 +2,102 @@
 import YoutubeCard from '../components/YoutubeCard.astro';
 import Layout from '../layouts/Layout.astro';
 
-const title = 'Psoems';
-const description = 'The place for Christ-first poems to uplift your life';
-const robots = 'index, follow';
+const pageInfo = {
+    title: 'Psoems',
+    description: 'The place for Christ-first songs & poems to uplift your life',
+    robots: 'index, follow',
+    canonical: '/',
+    imageURL: '/images/',
+    url: Astro.url,
+};
 
 const getVideosIDs = async (type) => {
     let typePlaylistID;
-    if (type === 'shorts') {
-        typePlaylistID = 'PLXiOleX9bZWysAEwrc9y8XV5cvSr2OIt3';
-    } else if (type === 'standard') {
-        typePlaylistID = 'PLXiOleX9bZWwJDtIH7fB12dhJQTkHwJx3';
-    } else {
-        return;
+    // let playlistRelatedYoutubeURL;
+    let fetchPlaylistDetails;
+    // let playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+    switch (type) {
+        case 'shortsSongs':
+            typePlaylistID = 'PLXiOleX9bZWwxpzAky8-BznkQL5mN23Yq';
+            // playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+            fetchPlaylistDetails = await fetch(`${import.meta.env.YoutubeURLMax1}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
+            break;
+        // case 'standardSongs':
+        //     typePlaylistID = '';
+        //     playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+        //     fetchPlaylistDetails = await fetch(`${import.meta.env[playlistRelatedYoutubeURL]}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
+        //     break;
+        case 'shortsPoems':
+            typePlaylistID = 'PLXiOleX9bZWysAEwrc9y8XV5cvSr2OIt3';
+            // playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+            fetchPlaylistDetails = await fetch(`${import.meta.env.YoutubeURLMax1}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
+            break;
+        case 'standardPoems':
+            typePlaylistID = 'PLXiOleX9bZWwJDtIH7fB12dhJQTkHwJx3';
+            // playlistRelatedYoutubeURL = 'YoutubeURL';
+            fetchPlaylistDetails = await fetch(`${import.meta.env.YoutubeURL}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
+            break;
+        default:
+            return;
     }
-    const fetchPlaylistDetails = await fetch(`${import.meta.env.YoutubeURL}${typePlaylistID}&key=${import.meta.env.YoutubeAPI}`);
+    // if (type === 'shortsSongs') {
+    //     typePlaylistID = 'PLXiOleX9bZWwxpzAky8-BznkQL5mN23Yq';
+    //     playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+    // } else if (type === 'shortsPoems') {
+    //     typePlaylistID = 'PLXiOleX9bZWysAEwrc9y8XV5cvSr2OIt3';
+    //     playlistRelatedYoutubeURL = 'YoutubeURLMax1';
+    // } else if (type === 'standardPoems') {
+    //     typePlaylistID = 'PLXiOleX9bZWwJDtIH7fB12dhJQTkHwJx3';
+    //     playlistRelatedYoutubeURL = 'YoutubeURL';
+    // } else {
+    //     return;
+    // }
     const data = await fetchPlaylistDetails.json();
     return data.items.map((value) => value.snippet).map((value) => value.resourceId.videoId);
 };
 
-const shortsVideosList = await getVideosIDs('shorts');
-const standardVideosList = await getVideosIDs('standard');
+const shortsSongsVideosList = await getVideosIDs('shortsSongs');
+// const standardSongsVideosList = await getVideosIDs('shortsSongs');
+const shortsPoemsVideosList = await getVideosIDs('shortsPoems');
+const standardPoemsVideosList = await getVideosIDs('standardPoems');
 ---
-<Layout title={title} description={description} url={Astro.url} robots={robots}>
+
+<Layout pageInfo={pageInfo}>
     <main class="py-4 lg:py-6">
         <article id="videos" class="max-w-screen-xl mx-auto px-6 sm:px-4 mb-10">
-            <section class="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-8 items-center">
-                {
-                    shortsVideosList.map((value) => (
-                        <div class="shorts-videos videos">
-                            <YoutubeCard videoID={value} />
-                        </div>
-                    ))
-                }
-                <div class="col-span-2">
-                    <h1 class="font-bold text-3xl mb-3">The Christ-first Poems</h1>
-                    <p class="mb-3">Psoems is a project made with the intention of making poems about life through the eyes of a Christian. In the biggest moments in life or in the small and unimportant moments in life, God is with us, guiding, helping, and protecting.</p>
-                    <p class="mb-4">Based on that, all Psoems' works of art are meant to express the human feelings towards our Lord and towards many other topics such as relationships, friendships, family, many more in life.</p>
-                    <a class="button-standard" href="/poems">Check Out More Poems</a>
+            <section class="grid grid-cols-1 md:grid-cols-4 gap-6 pb-8 items-center">
+                <div class="grid grid-cols-2 md:col-span-2 order-2 md:order-1 gap-2 sm:gap-4 md:gap-6">
+                    {
+                        shortsSongsVideosList.map((value) => (
+                            <div class="shorts-videos videos">
+                                <YoutubeCard videoID={value} />
+                            </div>
+                        ))
+                    }
+                    {
+                        shortsPoemsVideosList.map((value) => (
+                            <div class="shorts-videos videos">
+                                <YoutubeCard videoID={value} />
+                            </div>
+                        ))
+                    }
+                </div>
+                <div class="md:col-span-2 order-1 md:order-2">
+                    <h1 class="font-bold text-3xl mb-4">The Christ-First Songs & Poems</h1>
+                    <p class="mb-4">Psoems is a project made with the intention of making song & poems about life through the eyes of a Christian. In the biggest moments in life or in the small and unimportant moments in life, through the difficulties and the victories, through the pain and the relief, through the sorrow and the joy, through the very moments that every single one of us either went, is, or will go through, God is with us, guiding, helping, and protecting.</p>
+                    <p class="mb-6">Based on that, all Psoems' works of art are meant to express the human feelings and actions in such situations expressing what most of us go through many circumstances such as relationships, friendships, family, many more in life while keeping eyes towards our Lord.</p>
+                    <a class="button-standard mb-2 mr-1" href="/songs">Check Our Songs</a>
+                    <a class="button-ghost mb-2" href="/poems">Check Our Poems</a>
                 </div>
             </section>
             <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {
-                    standardVideosList.map((value) => (
+                    // standardSongsVideosList.map((value) => (
+                    //     <div class="videos">
+                    //         <YoutubeCard videoID={value} />
+                    //     </div>
+                    // ))
+                    standardPoemsVideosList.map((value) => (
                         <div class="videos">
                             <YoutubeCard videoID={value} />
                         </div>
@@ -52,7 +106,7 @@ const standardVideosList = await getVideosIDs('standard');
             </section>
             <section class="flex justify-center text-xl pt-8 font-bold">
                 <a href="https://www.youtube.com/channel/UCmUI3Ndj5D9yGSCtsK_Lhuw" class="flex justify-center items-center gap-2" rel="noopener">
-                    See More Videos <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" class="inline-block" fill="currentColor"><path d="m13.875 18.8-2.2-2.2 3.025-3.025H3.3v-3.15h11.4L11.675 7.4l2.2-2.2L20.7 12Z"/></svg>
+                    See More Videos <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" class="inline-block" fill="currentColor"><path d="m13.875 18.8-2.2-2.2 3.025-3.025H3.3v-3.15h11.4L11.675 7.4l2.2-2.2L20.7 12Z"></path></svg>
                 </a>
             </section>
         </article>
@@ -67,12 +121,10 @@ const standardVideosList = await getVideosIDs('standard');
                             <img src="/images/psoems-banner-460w-288h.png" class="w-full max-w-sm mx-auto h-auto" width="460" height="288" alt="contact-img" />
                         </div>
                         <div class="mb-2 sm:mb-3 md:mb-4">
-                            <span class="font-semibold text-lg opacity-90" style="var(--text-color)">The Christ-first Poems</span>
+                            <span class="font-semibold text-lg opacity-90" style="var(--text-color)">The Christ-First Songs & Poems</span>
                         </div>
                         <div class="mb-6 md:mb-8">
-                            <p class="font-normal" style="var(--text-color)">
-                                I wish all these works of art touches you and all others that watches the videos. If you liked them, please consider to share the videos with the people you know, it will be a great way to show them the Lord. Also, if you could, please like the videos and subscribe to the YouTube channel to help make this passion grow and reach more people. Thank you for your attention and care in reading all this. May God bless your day and your life!
-                            </p>
+                            <p class="font-normal" style="var(--text-color)">I wish all these works of art touches you and all others that watches the videos. If you liked them, please consider to share the videos with the people you know. Also, if you could, please like the videos and subscribe to the YouTube channel to help make this passion grow and reach more people. Thank you for your attention and care in reading all this. May God bless your day and your life!</p>
                         </div>
                         <div>
                             <p class="font-semibold">CONTACT ME AT</p>
@@ -143,7 +195,7 @@ const standardVideosList = await getVideosIDs('standard');
                                 <div class="col-span-12">
                                     <button name="submit" type="submit" id="submit" class="flex justify-center items-center gap-2">
                                         <span>SEND MESSAGE</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" class="inline-block" fill="currentColor"><path d="m13.875 18.8-2.2-2.2 3.025-3.025H3.3v-3.15h11.4L11.675 7.4l2.2-2.2L20.7 12Z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" class="inline-block" fill="currentColor"><path d="m13.875 18.8-2.2-2.2 3.025-3.025H3.3v-3.15h11.4L11.675 7.4l2.2-2.2L20.7 12Z"></path></svg>
                                         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg> -->
                                     </button>
                                 </div>

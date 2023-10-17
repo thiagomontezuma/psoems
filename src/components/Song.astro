@@ -1,0 +1,119 @@
+---
+const { song } = Astro.props;
+import { client } from '../../lib/sanity';
+import imageUrlBuilder from '@sanity/image-url';
+const builder = imageUrlBuilder(client);
+---
+<body style=`background:linear-gradient(180deg,rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),url(${builder.image(song.cover_art).url()});background-position:center;background-repeat:no-repeat;background-size:cover;min-width:100vw;min-height:100vh`> <!-- background-color:black;padding:1.5rem 1.75rem -->
+    <div style="background-color:#f0f0f0;border-radius:1rem;max-width:600px;margin:0 auto;padding:1rem 0">
+        <header style="box-shadow:1px 1px 1px #aaa;margin:0 auto 1rem;text-align:center;width:100px;height:100px;">
+            <img src={builder.image(song.cover_art).url()} style="width:100%;height:auto">
+        </header>
+        <div style="background-color:#333;color:white;padding:1rem;text-align:center">
+            <h1 style="font-size:1.75rem;font-weight:600;line-height:1.15;margin-bottom:0.5rem">{song.title}</h1>
+            <a href="/" style="align-items:center;display:flex;justify-content:center">
+                <img src="/images/psoems-logo-87x87.png" style="border-radius:2rem;height:auto;margin:0 0.25rem;max-width:100%" width="25" height="25">
+                <span style="margin:0 0.25rem">Psoems</span>
+            </a>
+        </div>
+        <div style="margin:1rem;text-align:center">
+            <p style="color:black;font-size:1.125rem;font-weight:700">Listen Now On:</p>
+        </div>
+        <main style="align-items:center;display:grid;grid-template-columns:repeat(auto-fit, minmax(70px, 1fr));justify-content:center;margin:1rem;text-align:center">
+            {song.link_spotify && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_spotify}` style="background-color:#1c1c1c;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/sp-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:5px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_apple_music && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_apple_music}` style="border-radius:10px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/ap-mu-icon.svg" style="height:auto;max-width:100%;object-fit:cover;" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_deezer &&
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_deezer}` style="background-color:#1c1c1c;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/de-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:11px 6px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_youtube_music && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_youtube_music}` style="background-color:white;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/yt-mu-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:4px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_amazon_music &&
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_amazon_music}` style="background:linear-gradient(135deg,#85d0db,#2a97a0);border-radius:12px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/am-mu-icon.svg" style="height:auto;max-width:100%;object-fit:cover" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_tidal &&
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_tidal}` style="background-color:#1c1c1c;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/ti-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:15px 12px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_video_youtube && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_video_youtube}` style="background-color:white;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/yt-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:4px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_pandora && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_pandora}` style="background-color:white;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/pan-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:4px" width="50" height="50">
+                    </a>
+                </div>
+            }
+            {song.link_iheartradio && 
+                <div style="margin:1rem 0.5rem">
+                    <a href=`${song.link_iheartradio}` style="background-color:white;border-radius:8px;box-shadow:1px 1px 1px #555;display:inline-block;width:50px;height:50px">
+                        <img src="/images/ihr-icon.svg" style="height:auto;max-width:100%;object-fit:cover;padding:9px 5px" width="50" height="50">
+                    </a>
+                </div>
+            }
+        </main>
+        {(song.link_tiktok || song.link_instagram || song.link_twitter_x || song.link_facebook) &&
+            <footer style="background-color:#333;color:white;padding:1.25rem;text-align:center">
+                <div style="align-items:center;display:flex;justify-content:center">
+                    <span style="font-size:0.875rem;margin:0 .5rem">Share at</span>
+                    <!-- ttk -->
+                    {song.link_tiktok && 
+                        <a href=`${song.link_tiktok}` style="background-color:#1c1c1c;border-radius:4px;box-shadow:1px 1px 1px #1c1c1c;display:inline-block;margin:0 .25rem;width:21px;height:21px">
+                            <img src="/images/ttk-icon.svg" style="height:auto;max-width:100%;object-fit:cover" width="21" height="21">
+                        </a>
+                    }
+                    <!-- inst -->
+                    {song.link_instagram && 
+                        <a href=`${song.link_instagram}` style="border-radius:4px;box-shadow:1px 1px 1px #1c1c1c;display:inline-block;margin:0 .25rem;width:24px;height:24px">
+                            <img src="/images/ins-icon.svg" style="height:auto;max-width:100%;object-fit:cover" width="24" height="24">
+                        </a>
+                    }
+                    <!-- x -->
+                    {song.link_twitter_x && 
+                        <a href=`${song.link_twitter_x}` style="border-radius:4px;box-shadow:1px 1px 1px #1c1c1c;display:inline-block;margin:0 .25rem;width:21px;height:21px">
+                            <img src="/images/twx-icon.svg" style="height:auto;max-width:100%;object-fit:cover" width="21" height="21">
+                        </a>
+                    }
+                    <!-- face -->
+                    {song.link_facebook && 
+                        <a href=`${song.link_facebook}` style="border-radius:4px;box-shadow:1px 1px 1px #1c1c1c;display:inline-block;margin:0 .25rem;width:18px;height:18px">
+                            <img src="/images/fa-icon.svg" style="height:auto;max-width:100%;object-fit:cover" width="18" height="18">
+                        </a>
+                    }
+                </div>
+            </footer>
+        }
+    </div>
+</body>

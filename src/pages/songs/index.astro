@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { client } from '../../../lib/sanity';
+import imageUrlBuilder from '@sanity/image-url';
+
+const fetchCMS = await client.fetch('*[_type == "albums"]{ ..., songs[]-> }');
+
+const builder = imageUrlBuilder(client);
+
+const pageInfo = {
+    title: 'Songs by Psoems',
+    description: 'The place for Christ-first songs & poems to uplift your life',
+    robots: 'index, follow',
+    canonical: `/songs/`,
+    imageURL: '/images/psoems-logo-120x120.png',
+    url: Astro.url,
+};
+---
+
+<Layout pageInfo={pageInfo}>
+    <main class="py-4 lg:py-6">
+        <h1 class="text-center font-bold text-3xl mb-10">List of Songs</h1>
+        <ul class="w-fit mx-auto mb-8">
+            {
+                fetchCMS.map((release_data, index, array) => {
+                    if (release_data.songs.length > 1) {
+                        return (
+                            <li>
+                                <div class="w-100 flex items-center gap-6 tab-selector" data-tabname={`album${index}Tab`} data-toggle="tab" data-targettab={`#album${index}Tab`}>
+                                    <img src={builder.image(release_data.cover_art).url()} style="max-width:100%;height:auto" width="80" height="80" loading="lazy" />
+                                    <div>
+                                        <p class="text-xl leading-4">{release_data.title}</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="var(--text-color)" class="dropdown mx-2">
+                                        <path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+                                    </svg>
+                                </div>
+                                <div class="tab pl-4" id={`album${index}Tab`}>
+                                    {release_data.songs.map((song_data, song_index, song_array) => {
+                                        return (
+                                            <div>
+                                                <a href={`/songs/${song_data.title_slug}`} class="w-100 flex items-center gap-6">
+                                                    <img src={builder.image(release_data.cover_art).url()} style="max-width:100%;height:auto" width="60" height="60" loading="lazy" />
+                                                    <div>
+                                                        <p class="leading-4">{song_data.title}</p>
+                                                        <small style="line-height:0.8">{song_data.genre}</small>
+                                                    </div>
+                                                </a>
+                                                <hr class="border-neutral-800 my-6" />
+                                                {song_array.length == song_index + 1 && <a href={`/albums/${release_data.title_slug}`}>Listen to Entire Album</a>}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                {array.length > index + 1 && <hr class="border-neutral-800 my-6" />}
+                            </li>
+                        );
+                    } else {
+                        return (
+                            <li>
+                                <a href={`/songs/${release_data.title_slug}`} class="w-100 flex items-center gap-6">
+                                    <img src={builder.image(release_data.cover_art).url()} style="max-width:100%;height:auto" width="100" height="100" loading="lazy" />
+                                    <div>
+                                        <p class="text-xl leading-4 mb-2">{release_data.title}</p>
+                                        <p class="text-sm" style="line-height:0.8">
+                                            {release_data.genre}
+                                        </p>
+                                    </div>
+                                </a>
+                                {array.length > index + 1 && <hr class="border-neutral-800 my-6" />}
+                            </li>
+                        );
+                    }
+                })
+            }
+        </ul>
+    </main>
+    <script is:inline src="/js/tabs.js"></script>
+</Layout>

@@ -56,6 +56,7 @@ body.light {
     --bg-color: #fff;
     --bg-color-opposite: #121212;
     --bg-input-color: #fdfefe;
+    --bg-card: #f7f7f7;
     --border-input-color: #dadada;
     --text-color: #000;
     --text-color-opposite: #f0f0f0;
@@ -70,6 +71,7 @@ body.dark {
     --bg-color: #121212;
     --bg-color-opposite: #fff;
     --bg-input-color: #3c3e41;
+    --bg-card: #292929;
     --border-input-color: #54575c;
     --text-color: #f0f0f0;
     --text-color-opposite: #000;
@@ -79,10 +81,6 @@ body.dark {
     --contact-box-shadow: 5px 5px 15px #2e3032, -5px -5px 15px #000000;
     color-scheme: dark;
 }
-
-// #changeStyleModeButton {
-//     background-image: var(--mode-image);
-// }
 
 @font-face {
     font-family: 'Buffalo';

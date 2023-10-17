@@ -1,0 +1,95 @@
+---
+import YoutubeCard from '../../components/YoutubeCard.astro';
+import Layout from '../../layouts/Layout.astro';
+import { client } from '../../../lib/sanity';
+import { marked } from 'marked';
+import DOMPurify from 'isomorphic-dompurify';
+
+export async function getStaticPaths() {
+    const fetchCMS = await client.fetch('*[_type == "poems"]');
+
+    return await fetchCMS.map((poem_data) => {
+        return {
+            params: {
+                poem_name: poem_data.title_slug,
+            },
+            props: { poem_data },
+        };
+    });
+}
+
+const { poem_name } = Astro.params;
+const { poem_data } = Astro.props;
+
+const pageInfo = {
+    title: `${poem_data.title} Poem by Psoems`,
+    description: `The place for Christ-first songs & poems to uplift your life`,
+    robots: 'index, follow',
+    canonical: `https://psoems.com/poems/${poem_name}`,
+    imageURL: '/images/psoems-logo-120x120.png',
+    url: Astro.url,
+};
+
+// console.log(DOMPurify.sanitize(marked.parse(poem_data.content.content)).replace(/<[^>]+>/g, '').replaceAll('\n','%20'));
+---
+
+<Layout pageInfo={pageInfo}>
+    <div class="mt-3 max-w-screen-xl px-4 mx-auto">
+        {
+            poem_data.youtube_shorts === true ? (
+                <div class="shorts-videos videos mb-8 max-w-xs mx-auto">
+                    <YoutubeCard videoID={poem_data.link_video_youtube} />
+                </div>
+            ) : (
+                <div class="videos mb-8 max-w-screen-2xl">
+                    <YoutubeCard videoID={poem_data.link_video_youtube} />
+                </div>
+            )
+        }
+        <article id="poem" class="w-fit mx-auto mb-12">
+            <h1 class="text-4xl font-bold mb-6 w-fit">{poem_data.title}</h1>
+            <Fragment set:html={DOMPurify.sanitize(marked.parse(poem_data.content.content))} />
+        </article>
+        <section class="mx-auto w-fit text-center lg:w-max lg:text-left lg:mx-0">
+            <p class="mb-2">Share this poem:</p>
+            <div class="flex gap-3 justify-center lg:justify-start mb-6 lg:mb-0">
+                <a
+                    href={`https://twitter.com/intent/tweet?text=${DOMPurify.sanitize(marked.parse(poem_data.content.content))
+                        .replace(/<[^>]+>/g, '')
+                        .replaceAll('\n', '%20')}&via=aaopm&url=${pageInfo.canonical}&original_referer=URL&cid=article_share_twitter`}
+                >
+                    <div class="h-6 w-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px" class="w-full h-auto" fill="var(--text-color)">
+                            <path
+                                d="M 11 4 C 7.1456661 4 4 7.1456661 4 11 L 4 39 C 4 42.854334 7.1456661 46 11 46 L 39 46 C 42.854334 46 46 42.854334 46 39 L 46 11 C 46 7.1456661 42.854334 4 39 4 L 11 4 z M 11 6 L 39 6 C 41.773666 6 44 8.2263339 44 11 L 44 39 C 44 41.773666 41.773666 44 39 44 L 11 44 C 8.2263339 44 6 41.773666 6 39 L 6 11 C 6 8.2263339 8.2263339 6 11 6 z M 13.085938 13 L 22.308594 26.103516 L 13 37 L 15.5 37 L 23.4375 27.707031 L 29.976562 37 L 37.914062 37 L 27.789062 22.613281 L 36 13 L 33.5 13 L 26.660156 21.009766 L 21.023438 13 L 13.085938 13 z M 16.914062 15 L 19.978516 15 L 34.085938 35 L 31.021484 35 L 16.914062 15 z"
+                            ></path>
+                        </svg>
+                    </div>
+                </a>
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${pageInfo.canonical}&cid=article_share_facebook`}>
+                    <div class="h-6 w-6">
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" fill="var(--text-color)">
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M2 6C2 3.79086 3.79086 2 6 2H18C20.2091 2 22 3.79086 22 6V18C22 20.2091 20.2091 22 18 22H6C3.79086 22 2 20.2091 2 18V6ZM6 4C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H12V13H11C10.4477 13 10 12.5523 10 12C10 11.4477 10.4477 11 11 11H12V9.5C12 7.567 13.567 6 15.5 6H16.1C16.6523 6 17.1 6.44772 17.1 7C17.1 7.55228 16.6523 8 16.1 8H15.5C14.6716 8 14 8.67157 14 9.5V11H16.1C16.6523 11 17.1 11.4477 17.1 12C17.1 12.5523 16.6523 13 16.1 13H14V20H18C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4H6Z"
+                            ></path>
+                        </svg>
+                    </div>
+                </a>
+                <a
+                    href={`mailto:?subject=${pageInfo.title}&body=${DOMPurify.sanitize(marked.parse(poem_data.content.content))
+                        .replace(/<[^>]+>/g, '')
+                        .replaceAll('\n', '%20')}`}
+                >
+                    <div class="h-6 w-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" class="w-full h-auto" fill="var(--text-color)">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+</Layout>

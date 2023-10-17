@@ -19,6 +19,24 @@
     transition: all 0.3s ease;
 }
 
+.button-ghost {
+    background-color: transparent;
+    border: 2px solid var(--bg-color-opposite);
+    border-radius: var(--border-radius-button);
+    color: var(--text-color);
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.625rem 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.button-ghost:hover {
+    background-color: var(--bg-color-opposite);
+    color: var(--text-color-opposite);
+}
+
 a {
     transition: opacity 0.3s ease;
 }
@@ -115,4 +133,40 @@ a:hover {
     list-style: none;
     text-decoration: none;
     width: 100%;
+}
+
+/* Tabs */
+.tab {
+    display: flex !important;
+    opacity: 0;
+    padding: 0;
+    max-height: 0;
+    transition: all 0.35s ease-out;
+    visibility: hidden;
+}
+
+.tab-show {
+    max-height: fit-content;
+    opacity: 1;
+    padding: 2rem 0 1.5rem;
+    visibility: visible;
+}
+
+.tab-selector {
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.tab-selector .dropdown {
+    transition: transform 0.5s ease;
+}
+
+.tab-selector-active.tab-selector {
+    // background-color: #777777!important;
+    color: white!important;
+    transition: all 0.5s ease;
+}
+
+.tab-selector-active.tab-selector .dropdown {
+    transform: rotate(-180deg)!important;
 }

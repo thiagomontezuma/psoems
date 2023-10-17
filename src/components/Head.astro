@@ -2,7 +2,8 @@
 import GoogleAnalytics from './GoogleAnalytics.astro'
 import '../styles/main.scss'
 
-const { title, description} = Astro.props;
+const { pageInfo } = Astro.props;
+const { title, description, robots, canonical, imageURL, url } = pageInfo
 
 let permalink = 'https://psoems.com';
 ---
@@ -11,7 +12,7 @@ let permalink = 'https://psoems.com';
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="sitemap" href="/sitemap.xml"/>
 
 <!-- Icons -->
